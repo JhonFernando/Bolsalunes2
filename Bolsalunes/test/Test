@@ -1,0 +1,33 @@
+   <?php
+
+  
+  @Before
+  public void setUp() {
+   p_persona = new Mockpersona(false);
+    try {
+      session_name().addEmpleado(new EmpleadoTO(1,"12345678X", 
+             "Paco Garcia", TipoEmpleado.vendedor, 1250, 8));
+      session_name().addEmpleado(new EmpleadoTO(2,"65645342B", 
+             "Maria Gomez", TipoEmpleado.encargado, 1600, 2));
+      edao.addEmpleado(new EmpleadoTO(3,"45452343F", 
+             "Manolo Gutierrez", TipoEmpleado.vendedor, 800, 0));
+    } catch (DAOException e) {
+      e.printStackTrace();
+    }
+         
+    ebo = new TestableEmpleadoBO();
+    ebo.setEmpleadoDAO(edao);
+  }
+     
+  @Test
+  public void testGetSalarioBruto() {
+    try {
+      float resultadoReal = ebo.getSalarioBruto(3);
+      float resultadoEsperado = 1000.0f;
+             
+      assertEquals(resultadoEsperado, resultadoReal, 0.01);
+    } catch (BOException e) {
+      fail("Lanzada excepcion no esperada BOException");
+    }
+  }
+}
